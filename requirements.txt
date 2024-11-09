@@ -1,0 +1,5 @@
+# Astro Runtime includes the following pre-installed providers packages: https://docs.astronomer.io/astro/runtime-image-architecture#provider-packages
+requests>=2.31.0
+pandas>=2.1.0
+google-cloud-storage>=2.13.0
+google-cloud-bigquery>=3.10.0
