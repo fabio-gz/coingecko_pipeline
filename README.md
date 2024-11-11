@@ -16,7 +16,6 @@ Si se requiriera hacer analitica en tiempo real se podria usar un servicio de me
 Contenido
 ================
 
-
 - dags: Carpeta que contiene los Dags para ingesta de datos y la transformación de los mismos.
 - include: Carpeta que contiene archivos de ayuda y utilidades.
 - requirements.txt: liberias necesarias.
@@ -31,6 +30,8 @@ Para este proyecto se utilizo Astronomer localmente, para levantar el ambiente s
 astro dev start
 ```
 
+#### Variables de entorno:
+Se deben fijar dos variables de entorno, desde el UI de airlfow se fijo el valor de la api key de Coingecko con la llave api_key. Y para la conexion a Bigquery se creo un conector por defecto usando el json de una cuenta de servicio.
 
 Para eliminar el ambiente se debe ejecutar el siguiente comando:
 
