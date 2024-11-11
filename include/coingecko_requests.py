@@ -1,30 +1,25 @@
 import requests
 import pandas as pd
-from variables.vars import api_key, task_log
+from include.global_variables.vars import api_key, task_log
 
-def get_simple_price(coin_id: str, currency: str) -> pd.DataFrame:
+def get_coins() -> str:
     """
-    Get the simple price for given list of coins.
+    Get list of coins.
     """
 
-    url = "https://api.coingecko.com/api/v3/simple/price"
+    url = "https://api.coingecko.com/api/v3/coins/list"
 
     headers = {
         "accept": "application/json",
         "x-cg-demo-api-key": api_key
     }
 
-    params = {
-        "ids": coin_id,
-        "vs_currencies": currency,
-        "include_market_cap": "true",
-        "include_24hr_vol": "true",
-        "include_24hr_change": "true",
-    }
     try:
-        res = requests.get(url, headers=headers, params=params)
+        res = requests.get(url, headers=headers)
         data = res.json()
-        return pd.DataFrame(data)
+        df = pd.DataFrame(data)
+        st = ', '.join(df['id'])
+        return st
     except Exception as e:
         task_log.error(f"Error getting simple price: {e}")
         raise e
@@ -34,6 +29,7 @@ def get_coin_market_data(vs_currency: str, ids: str) -> pd.DataFrame:
     """
     Get the market data for given list of coins.
     """
+
     try:
         all_data = []
         page = 1
@@ -46,6 +42,7 @@ def get_coin_market_data(vs_currency: str, ids: str) -> pd.DataFrame:
         while True:
             params = {
                 'vs_currency': vs_currency,
+                'ids': ids,
                 'order': 'market_cap_desc',
                 'per_page': 200,
                 'page': page,
