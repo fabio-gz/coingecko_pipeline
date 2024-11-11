@@ -18,7 +18,7 @@ def get_coins() -> str:
         res = requests.get(url, headers=headers)
         data = res.json()
         df = pd.DataFrame(data)
-        st = ', '.join(df['id'])
+        st = ', '.join(df['id'].iloc[:10])
         return st
     except Exception as e:
         task_log.error(f"Error getting simple price: {e}")
@@ -43,7 +43,6 @@ def get_coin_market_data(vs_currency: str, ids: str) -> pd.DataFrame:
             params = {
                 'vs_currency': vs_currency,
                 'ids': ids,
-                'order': 'market_cap_desc',
                 'per_page': 200,
                 'page': page,
             }
@@ -79,7 +78,7 @@ def get_exchages_data() -> pd.DataFrame:
         res = requests.get(url, headers=headers, params=params)
         data = res.json()
 
-        return pd.DataFrame(data)
+        return pd.DataFrame(data, dtype=str)
     except Exception as e:
         task_log.error(f"Error getting exchanges data: {e}")
         raise e

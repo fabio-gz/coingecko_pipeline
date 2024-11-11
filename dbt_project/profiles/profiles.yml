@@ -1,0 +1,9 @@
+dbt_project:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: airbnb-360816
+      dataset: dbt_coingecko
+      
